@@ -30,7 +30,8 @@ export class App implements OnInit {
         if (accounts.length > 0 && !this.msalService.instance.getActiveAccount()) {
           this.msalService.instance.setActiveAccount(accounts[0]);
         }
-        void this.router.navigateByUrl('/dashboard');
+        // La raiz redirige a la pantalla de inicio segun el rol (homeRedirectGuard).
+        void this.router.navigateByUrl('/');
       });
 
     this.broadcastService.inProgress$

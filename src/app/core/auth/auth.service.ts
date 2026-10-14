@@ -3,7 +3,7 @@ import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { AccountInfo, InteractionStatus } from '@azure/msal-browser';
 import { filter } from 'rxjs';
 import { appConfig } from '../config/app.config';
-import { Rol } from '../../models/rol.model';
+import { Rol } from '../../domain/rol.model';
 
 /**
  * Unico punto de contacto entre la app y MSAL.
@@ -19,6 +19,8 @@ export class AuthService {
 
   readonly isLoggedIn = computed(() => this.activeAccount() !== null);
   readonly displayName = computed(() => this.activeAccount()?.name ?? '');
+  /** Email de la cuenta (claim preferred_username); el BFF usa el mismo claim. */
+  readonly email = computed(() => this.activeAccount()?.username ?? '');
   readonly roles = computed((): Rol[] => {
     const claims = this.activeAccount()?.idTokenClaims as { roles?: Rol[] } | undefined;
     return claims?.roles ?? [];
@@ -32,6 +34,14 @@ export class AuthService {
       });
   }
 
+  /**
+   * Relee la cuenta activa desde MSAL. Los guards lo llaman antes de decidir,
+   * porque justo despues del login redirect la señal puede no estar actualizada aun.
+   */
+  sincronizarCuenta(): void {
+    this.activeAccount.set(this.msalService.instance.getActiveAccount());
+  }
+
   login(): void {
     this.msalService.loginRedirect({ scopes: [appConfig.bff.scope] });
   }
@@ -40,12 +50,7 @@ export class AuthService {
     this.msalService.logoutRedirect();
   }
 
-  /** Roles asignados al usuario, extraidos del claim "roles" del ID token. */
-  getRoles(): Rol[] {
-    return this.roles();
-  }
-
-  hasAnyRole(allowed: Rol[]): boolean {
+  hasAnyRole(allowed: readonly Rol[]): boolean {
     return this.roles().some((rol) => allowed.includes(rol));
   }
 }
