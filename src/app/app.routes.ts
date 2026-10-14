@@ -6,7 +6,7 @@ import { ROLES } from './models/rol.model';
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),
+    loadComponent: () => import('./features/auth/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'dashboard',
