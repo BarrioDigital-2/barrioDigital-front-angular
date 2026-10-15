@@ -1,0 +1,35 @@
+<header class="header">
+  <div class="header__contenido">
+    <div class="header__izquierda">
+      <a class="marca" routerLink="/">
+        <span class="marca__logo" aria-hidden="true">BD</span>
+        <span class="marca__nombre">BarrioDigital</span>
+      </a>
+
+      @if (navItems().length > 0) {
+        <nav class="nav" aria-label="Principal">
+          @for (item of navItems(); track item.ruta) {
+            <a
+              class="nav__link"
+              [routerLink]="item.ruta"
+              routerLinkActive="nav__link--activo"
+              ariaCurrentWhenActive="page"
+            >{{ item.etiqueta }}</a>
+          }
+        </nav>
+      }
+    </div>
+
+    <div class="usuario">
+      <div class="usuario__datos">
+        <span class="usuario__nombre">{{ nombre() }}</span>
+        <span class="usuario__roles">{{ rolesTexto() }}</span>
+      </div>
+      <button type="button" class="usuario__salir" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="contenido">
+  <router-outlet />
+</main>
