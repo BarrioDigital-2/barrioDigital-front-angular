@@ -70,3 +70,169 @@ a {
 button {
   font-family: inherit;
 }
+
+/* ---------- Estados de tramite (fondo / texto / color solido para graficos) ---------- */
+
+:root {
+  --estado-ingresado-bg: #eceff3;
+  --estado-ingresado-fg: #3d4757;
+  --estado-ingresado-solido: #8792a3;
+  --estado-admitido-bg: #e8f0fd;
+  --estado-admitido-fg: #1d4a96;
+  --estado-admitido-solido: #2454a8;
+  --estado-en-gestion-bg: #efe9fb;
+  --estado-en-gestion-fg: #5a3a9e;
+  --estado-en-gestion-solido: #7a5cc4;
+  --estado-en-terreno-bg: #fdf1e0;
+  --estado-en-terreno-fg: #8a4f06;
+  --estado-en-terreno-solido: #d9822b;
+  --estado-resuelto-bg: #e3f6ec;
+  --estado-resuelto-fg: #136c46;
+  --estado-resuelto-solido: #1f9d63;
+  --estado-rechazado-bg: #fbe9e8;
+  --estado-rechazado-fg: #a8291f;
+  --estado-rechazado-solido: #c0322a;
+}
+
+/* ---------- Clases base reutilizables ---------- */
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pagina__encabezado {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.pagina__titulo {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pagina__bajada {
+  font-size: 1rem;
+}
+
+.tarjeta {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.btn {
+  height: 44px;
+  padding: 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--sm {
+  height: 36px;
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.btn--secondary {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-bg);
+}
+
+.btn--danger {
+  background: var(--color-surface);
+  border-color: #e3b4b0;
+  color: var(--estado-rechazado-fg);
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--color-danger-bg);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.campo__control {
+  height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 400;
+}
+
+.campo__control:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.campo__control[readonly] {
+  background: var(--color-bg);
+  color: var(--estado-ingresado-fg);
+}
+
+.campo__ayuda {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.campo__error {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--estado-rechazado-fg);
+}
+
+.mensaje {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.mensaje--error {
+  background: var(--color-danger-bg);
+  border-color: #e3b4b0;
+  color: var(--estado-rechazado-fg);
+}

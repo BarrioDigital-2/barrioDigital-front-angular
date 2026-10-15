@@ -1,0 +1,10 @@
+.tramite-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tramite-form__enviar {
+  height: 48px;
+  font-size: 0.9375rem;
+}

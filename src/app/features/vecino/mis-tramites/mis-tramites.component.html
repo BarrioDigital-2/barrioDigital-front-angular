@@ -1,0 +1,83 @@
+<div class="pagina">
+  <header class="pagina__encabezado">
+    <h1 class="pagina__titulo">Hola, {{ primerNombre() }}</h1>
+    @if (!cargando() && !errorCarga()) {
+      <p class="pagina__bajada">
+        Tienes {{ enCurso().length }} {{ enCurso().length === 1 ? 'trámite' : 'trámites' }} en curso
+        y {{ cerrados().length }} {{ cerrados().length === 1 ? 'cerrado' : 'cerrados' }}.
+      </p>
+    }
+  </header>
+
+  <div class="mis-tramites">
+    <section class="mis-tramites__lista" aria-labelledby="titulo-lista">
+      <div class="lista__encabezado">
+        <h2 id="titulo-lista" class="seccion__titulo">Mis trámites</h2>
+
+        <div class="segmentos" role="group" aria-label="Filtrar trámites">
+          <button type="button" class="segmentos__opcion" [class.segmentos__opcion--activa]="filtro() === 'todos'"
+            [attr.aria-pressed]="filtro() === 'todos'" (click)="filtro.set('todos')">
+            Todos ({{ tramites().length }})
+          </button>
+          <button type="button" class="segmentos__opcion" [class.segmentos__opcion--activa]="filtro() === 'en-curso'"
+            [attr.aria-pressed]="filtro() === 'en-curso'" (click)="filtro.set('en-curso')">
+            En curso ({{ enCurso().length }})
+          </button>
+          <button type="button" class="segmentos__opcion" [class.segmentos__opcion--activa]="filtro() === 'cerrados'"
+            [attr.aria-pressed]="filtro() === 'cerrados'" (click)="filtro.set('cerrados')">
+            Cerrados ({{ cerrados().length }})
+          </button>
+        </div>
+      </div>
+
+      @if (cargando()) {
+        <p class="mensaje">Cargando tus trámites...</p>
+      } @else if (errorCarga()) {
+        <p class="mensaje mensaje--error">{{ errorCarga() }}</p>
+      } @else {
+        @for (tramite of filtrados(); track tramite.id) {
+          <article class="tarjeta tramite">
+            <div class="tramite__cabecera">
+              <div class="tramite__titulo">
+                <span class="tramite__numero">N.º {{ tramite.id }}</span>
+                <h3 class="tramite__tipo">{{ tramite.tipoTramite }}</h3>
+              </div>
+              <app-estado-badge [estado]="tramite.estado" />
+            </div>
+
+            <app-estado-progreso [tramite]="tramite" />
+
+            <div class="tramite__fechas">
+              <span>Ingresado el {{ tramite.fechaCreacion | date: 'd MMM y' }}</span>
+              <span>Última actualización {{ tramite.fechaActualizacion | date: 'd MMM y, HH:mm' }}</span>
+            </div>
+          </article>
+        } @empty {
+          <p class="mensaje">
+            @if (filtro() === 'todos') {
+              Aún no has ingresado trámites. Usa el formulario para crear el primero.
+            } @else {
+              No tienes trámites en esta categoría.
+            }
+          </p>
+        }
+      }
+    </section>
+
+    <aside class="tarjeta mis-tramites__nuevo" aria-labelledby="titulo-nuevo">
+      <div class="nuevo__encabezado">
+        <h2 id="titulo-nuevo" class="seccion__titulo">Nuevo trámite</h2>
+        <p class="nuevo__bajada">Elige el tipo y te asignamos un número.</p>
+      </div>
+
+      @if (creadoId()) {
+        <p class="nuevo__exito" role="status">Trámite N.º {{ creadoId() }} ingresado.</p>
+      }
+      @if (errorEnvio()) {
+        <p class="mensaje mensaje--error" role="alert">{{ errorEnvio() }}</p>
+      }
+
+      <app-tramite-form [emailFijo]="email()" [enviando]="enviando()" (enviar)="crear($event)" />
+    </aside>
+  </div>
+</div>

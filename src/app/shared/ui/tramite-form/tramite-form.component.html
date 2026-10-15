@@ -1,0 +1,34 @@
+<form class="tramite-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <label class="campo">
+    Tipo de trámite
+    <select class="campo__control" formControlName="tipoTramite">
+      <option value="" disabled>Selecciona una opción</option>
+      @for (tipo of tipos; track tipo.nombre) {
+        <option [value]="tipo.nombre">{{ tipo.nombre }}</option>
+      }
+    </select>
+    @if (campoInvalido('tipoTramite')) {
+      <span class="campo__error">Elige el tipo de trámite.</span>
+    }
+  </label>
+
+  <label class="campo">
+    {{ emailFijo() ? 'Correo de contacto' : 'Correo del vecino' }}
+    <input
+      class="campo__control"
+      type="email"
+      formControlName="vecinoEmail"
+      [readonly]="!!emailFijo()"
+      placeholder="vecino@correo.cl"
+    />
+    @if (emailFijo()) {
+      <span class="campo__ayuda">Se toma de tu cuenta Microsoft.</span>
+    } @else if (campoInvalido('vecinoEmail')) {
+      <span class="campo__error">Ingresa un correo válido.</span>
+    }
+  </label>
+
+  <button type="submit" class="btn btn--primary tramite-form__enviar" [disabled]="enviando()">
+    {{ enviando() ? 'Enviando...' : 'Ingresar trámite' }}
+  </button>
+</form>
