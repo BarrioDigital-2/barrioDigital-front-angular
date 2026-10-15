@@ -1,0 +1,89 @@
+<div class="pagina">
+  <div class="bandeja__encabezado">
+    <header class="pagina__encabezado">
+      <h1 class="pagina__titulo">Bandeja de trámites</h1>
+      @if (!store.cargando()) {
+        <p class="pagina__bajada">{{ store.abiertos() }} abiertos · {{ store.porAdmitir() }} esperan admisión</p>
+      }
+    </header>
+
+    <label class="campo bandeja__buscar">
+      Buscar
+      <input
+        class="campo__control"
+        type="search"
+        placeholder="N.º de trámite o correo"
+        [value]="store.busqueda()"
+        (input)="onBuscar($event)"
+      />
+    </label>
+  </div>
+
+  <div class="chips" role="group" aria-label="Filtrar por estado">
+    @for (filtro of store.filtros(); track filtro.etiqueta) {
+      <button
+        type="button"
+        class="chip"
+        [class.chip--activo]="store.estadoFiltro() === filtro.estado"
+        [attr.aria-pressed]="store.estadoFiltro() === filtro.estado"
+        (click)="store.estadoFiltro.set(filtro.estado)"
+      >
+        {{ filtro.etiqueta }}
+        <span class="chip__cantidad">{{ filtro.cantidad }}</span>
+      </button>
+    }
+  </div>
+
+  @if (store.error()) {
+    <p class="mensaje mensaje--error" role="alert">{{ store.error() }}</p>
+  }
+
+  @if (store.cargando()) {
+    <p class="mensaje">Cargando trámites...</p>
+  } @else {
+    <div class="tarjeta tabla-contenedor">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th scope="col">N.º</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Vecino</th>
+            <th scope="col">Ingreso</th>
+            <th scope="col">Estado</th>
+            <th scope="col" class="tabla__acciones">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tramite of store.filtrados(); track tramite.id) {
+            <tr>
+              <td class="tabla__numero">{{ tramite.id }}</td>
+              <td class="tabla__tipo">{{ tramite.tipoTramite }}</td>
+              <td>{{ tramite.vecinoEmail }}</td>
+              <td class="tabla__fecha">{{ tramite.fechaCreacion | date: 'd MMM' }}</td>
+              <td><app-estado-badge [estado]="tramite.estado" /></td>
+              <td class="tabla__acciones">
+                <div class="acciones">
+                  @for (accion of acciones(tramite); track accion.destino) {
+                    <button
+                      type="button"
+                      class="btn btn--sm"
+                      [class]="'btn--' + accion.variante"
+                      [disabled]="store.procesandoId() === tramite.id"
+                      (click)="ejecutar(tramite, accion)"
+                    >{{ accion.etiqueta }}</button>
+                  } @empty {
+                    <span class="acciones__cerrado">Cerrado</span>
+                  }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="tabla__vacia">No hay trámites que coincidan con el filtro.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

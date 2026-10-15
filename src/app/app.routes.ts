@@ -29,12 +29,13 @@ export const routes: Routes = [
       {
         path: 'bandeja',
         canActivate: [roleGuard([ROLES.FUNCIONARIO, ROLES.ADMIN])],
-        loadComponent: () => import('./pages/requests/requests-list.component').then((m) => m.RequestsListComponent),
+        loadComponent: () => import('./features/gestion/bandeja/bandeja.component').then((m) => m.BandejaComponent),
       },
       {
         path: 'ingresar',
         canActivate: [roleGuard([ROLES.FUNCIONARIO])],
-        loadComponent: () => import('./pages/requests/requests-create.component').then((m) => m.RequestsCreateComponent),
+        loadComponent: () =>
+          import('./features/gestion/ingresar-tramite/ingresar-tramite.component').then((m) => m.IngresarTramiteComponent),
       },
       {
         path: 'resumen',

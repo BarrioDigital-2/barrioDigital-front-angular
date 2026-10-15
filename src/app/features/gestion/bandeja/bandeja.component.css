@@ -1,0 +1,114 @@
+.bandeja__encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.bandeja__buscar {
+  flex: 0 1 320px;
+}
+
+/* Filtros por estado */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: -1rem;
+}
+
+.chip {
+  height: 40px;
+  padding: 0 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid #cfd6e0;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: var(--color-bg);
+}
+
+.chip--activo,
+.chip--activo:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: #ffffff;
+}
+
+.chip__cantidad {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+/* Tabla */
+.tabla-contenedor {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  min-width: 880px;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.tabla th {
+  padding: 0.75rem 1rem;
+  background: #f7f9fb;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tabla td {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e8ecf1;
+  color: var(--estado-ingresado-fg);
+}
+
+.tabla__numero {
+  font-variant-numeric: tabular-nums;
+}
+
+.tabla td.tabla__tipo {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.tabla__fecha {
+  white-space: nowrap;
+}
+
+.tabla th.tabla__acciones,
+.tabla__acciones {
+  text-align: right;
+}
+
+.tabla__vacia {
+  text-align: center;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.acciones__cerrado {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
