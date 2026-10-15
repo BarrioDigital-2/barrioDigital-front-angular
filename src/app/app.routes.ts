@@ -6,8 +6,6 @@ import { ROLES } from './domain/rol.model';
 /**
  * /login es publica. Todo lo demas vive dentro del shell, protegido por MsalGuard (exige sesion);
  * cada pantalla agrega roleGuard (exige rol). La raiz redirige a la pantalla de inicio del rol.
- *
- * TEMPORAL: mientras se construyen las vistas nuevas, algunas rutas usan las paginas antiguas de pages/.
  */
 export const routes: Routes = [
   {
@@ -40,12 +38,12 @@ export const routes: Routes = [
       {
         path: 'resumen',
         canActivate: [roleGuard([ROLES.ADMIN])],
-        loadComponent: () => import('./pages/requests/requests-list.component').then((m) => m.RequestsListComponent),
+        loadComponent: () => import('./features/admin/resumen/resumen.component').then((m) => m.ResumenComponent),
       },
       {
         path: 'registro',
         canActivate: [roleGuard([ROLES.AUDITOR])],
-        loadComponent: () => import('./pages/requests/requests-list.component').then((m) => m.RequestsListComponent),
+        loadComponent: () => import('./features/auditoria/registro/registro.component').then((m) => m.RegistroComponent),
       },
       {
         path: 'sin-rol',

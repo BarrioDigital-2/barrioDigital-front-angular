@@ -1,0 +1,88 @@
+<div class="pagina">
+  <header class="pagina__encabezado">
+    <div class="registro__titulo">
+      <h1 class="pagina__titulo">Registro de trámites</h1>
+      <span class="solo-lectura">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+        Solo lectura
+      </span>
+    </div>
+    <p class="pagina__bajada">Consulta el historial completo. Los cambios de estado los hace un funcionario.</p>
+  </header>
+
+  <div class="tarjeta filtros">
+    <label class="campo filtros__campo">
+      Estado
+      <select class="campo__control" [value]="estadoFiltro()" (change)="onEstado($event)">
+        <option value="">Todos</option>
+        @for (estado of estados; track estado.valor) {
+          <option [value]="estado.valor">{{ estado.etiqueta }}</option>
+        }
+      </select>
+    </label>
+    <label class="campo filtros__campo">
+      Desde
+      <input class="campo__control" type="date" [value]="desde()" [max]="hasta() || null" (change)="onFecha('desde', $event)" />
+    </label>
+    <label class="campo filtros__campo">
+      Hasta
+      <input class="campo__control" type="date" [value]="hasta()" [min]="desde() || null" (change)="onFecha('hasta', $event)" />
+    </label>
+    <div class="filtros__acciones">
+      <button type="button" class="btn btn--secondary" (click)="limpiarFiltros()">Limpiar</button>
+      <button type="button" class="btn btn--secondary" [disabled]="filtrados().length === 0" (click)="exportar()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3v12" />
+          <path d="M7 10l5 5 5-5" />
+          <path d="M5 21h14" />
+        </svg>
+        Descargar CSV
+      </button>
+    </div>
+  </div>
+
+  @if (error()) {
+    <p class="mensaje mensaje--error" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="mensaje">Cargando registro...</p>
+  } @else {
+    <div class="tarjeta tabla-contenedor">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th scope="col">N.º</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Vecino</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Creado</th>
+            <th scope="col">Última actualización</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tramite of filtrados(); track tramite.id) {
+            <tr>
+              <td class="tabla__numero">{{ tramite.id }}</td>
+              <td class="tabla__tipo">{{ tramite.tipoTramite }}</td>
+              <td>{{ tramite.vecinoEmail }}</td>
+              <td><app-estado-badge [estado]="tramite.estado" /></td>
+              <td class="tabla__fecha">{{ tramite.fechaCreacion | date: 'dd-MM-yyyy HH:mm' }}</td>
+              <td class="tabla__fecha">{{ tramite.fechaActualizacion | date: 'dd-MM-yyyy HH:mm' }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="tabla__vacia">No hay trámites que coincidan con los filtros.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <p class="tabla__pie">Mostrando {{ filtrados().length }} de {{ total() }} trámites</p>
+    </div>
+  }
+</div>
