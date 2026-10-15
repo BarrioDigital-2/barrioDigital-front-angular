@@ -18,7 +18,7 @@ export const TIPOS_TRAMITE: readonly TipoTramite[] = [
   { nombre: 'Retiro de cachureos', requiereTerreno: true },
 ];
 
-/** Tipos desconocidos (datos antiguos en texto libre) se tratan como que requieren terreno. */
+/** Solo los tipos marcados en la lista van a terreno; cualquier otro (incluido texto libre antiguo) va por gestion. */
 export function requiereTerreno(tipoTramite: string): boolean {
-  return TIPOS_TRAMITE.find((tipo) => tipo.nombre === tipoTramite)?.requiereTerreno ?? true;
+  return TIPOS_TRAMITE.find((tipo) => tipo.nombre === tipoTramite)?.requiereTerreno ?? false;
 }

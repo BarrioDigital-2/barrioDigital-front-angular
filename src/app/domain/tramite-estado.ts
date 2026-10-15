@@ -32,10 +32,15 @@ export const ESTADO_META: Record<EstadoTramite, EstadoMeta> = {
   RECHAZADO: { etiqueta: 'Rechazado', clase: 'rechazado', cerrado: true },
 };
 
-/** Camino normal de un tramite; EN_TERRENO solo aplica si el tipo lo requiere. */
+/**
+ * Camino normal de un tramite. Regla de ms-requests: a EN_TERRENO solo se llega desde ADMITIDO.
+ * - Con visita (luminaria, hoyo...): Ingresado → Admitido → En terreno → Resuelto
+ * - Sin visita (certificado):        Ingresado → Admitido → En gestión → Resuelto
+ */
 export function pasosDelFlujo(tramite: Tramite): EstadoTramite[] {
-  return requiereTerreno(tramite.tipoTramite)
-    ? ['INGRESADO', 'ADMITIDO', 'EN_GESTION', 'EN_TERRENO', 'RESUELTO']
+  // Un tramite que ya esta EN_TERRENO sigue ese camino aunque su tipo no este en la lista
+  return requiereTerreno(tramite.tipoTramite) || tramite.estado === 'EN_TERRENO'
+    ? ['INGRESADO', 'ADMITIDO', 'EN_TERRENO', 'RESUELTO']
     : ['INGRESADO', 'ADMITIDO', 'EN_GESTION', 'RESUELTO'];
 }
 
@@ -50,7 +55,7 @@ export interface AccionEstado {
 const RECHAZAR: AccionEstado = { etiqueta: 'Rechazar', destino: 'RECHAZADO', variante: 'danger' };
 const ADMITIR: AccionEstado = { etiqueta: 'Admitir', destino: 'ADMITIDO', variante: 'primary' };
 const A_GESTION: AccionEstado = { etiqueta: 'Pasar a gestión', destino: 'EN_GESTION', variante: 'primary' };
-const A_TERRENO: AccionEstado = { etiqueta: 'Enviar a terreno', destino: 'EN_TERRENO', variante: 'secondary' };
+const A_TERRENO: AccionEstado = { etiqueta: 'Enviar a terreno', destino: 'EN_TERRENO', variante: 'primary' };
 const RESOLVER: AccionEstado = { etiqueta: 'Resolver', destino: 'RESUELTO', variante: 'primary' };
 
 /** Siguiente paso posible desde el estado actual. Los estados cerrados no tienen acciones. */
@@ -59,9 +64,9 @@ export function accionesDisponibles(tramite: Tramite): AccionEstado[] {
     case 'INGRESADO':
       return [RECHAZAR, ADMITIR];
     case 'ADMITIDO':
-      return [A_GESTION];
+      return requiereTerreno(tramite.tipoTramite) ? [A_TERRENO] : [A_GESTION];
     case 'EN_GESTION':
-      return requiereTerreno(tramite.tipoTramite) ? [A_TERRENO, RESOLVER] : [RESOLVER];
+      return [RESOLVER];
     case 'EN_TERRENO':
       return [RESOLVER];
     default:
