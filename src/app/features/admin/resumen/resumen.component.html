@@ -1,0 +1,90 @@
+<div class="pagina">
+  <header class="pagina__encabezado">
+    <h1 class="pagina__titulo">Resumen de operación</h1>
+    <p class="pagina__bajada">Estado de todos los trámites ingresados.</p>
+  </header>
+
+  @if (error()) {
+    <p class="mensaje mensaje--error" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="mensaje">Cargando resumen...</p>
+  } @else {
+    <div class="indicadores">
+      @for (indicador of indicadores(); track indicador.etiqueta) {
+        <div class="tarjeta indicador">
+          <span class="indicador__etiqueta">{{ indicador.etiqueta }}</span>
+          <span class="indicador__valor">{{ indicador.valor }}</span>
+        </div>
+      }
+    </div>
+
+    <section class="tarjeta seccion" aria-labelledby="titulo-distribucion">
+      <h2 id="titulo-distribucion" class="seccion__titulo">Trámites por estado</h2>
+      <ul class="distribucion">
+        @for (fila of distribucion(); track fila.clase) {
+          <li class="distribucion__fila">
+            <span class="distribucion__etiqueta">{{ fila.etiqueta }}</span>
+            <progress
+              class="distribucion__barra"
+              [class]="'distribucion__barra--' + fila.clase"
+              [value]="fila.cantidad"
+              [max]="total() || 1"
+              [attr.aria-label]="fila.etiqueta + ': ' + fila.cantidad + ' de ' + total()"
+            ></progress>
+            <span class="distribucion__cantidad">{{ fila.cantidad }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <div class="columnas">
+      <section class="tarjeta seccion" aria-labelledby="titulo-pendientes">
+        <div class="seccion__encabezado">
+          <h2 id="titulo-pendientes" class="seccion__titulo">Requieren atención</h2>
+          <p class="seccion__bajada">Ingresados sin admitir, del más antiguo al más nuevo.</p>
+        </div>
+        <ul class="lista">
+          @for (tramite of pendientes(); track tramite.id) {
+            <li class="lista__item">
+              <div class="lista__texto">
+                <span class="lista__titulo">{{ tramite.tipoTramite }}</span>
+                <span class="lista__detalle">
+                  N.º {{ tramite.id }} · {{ tramite.vecinoEmail }} · {{ tramite.fechaCreacion | date: 'd MMM, HH:mm' }}
+                </span>
+              </div>
+              <button
+                type="button"
+                class="btn btn--primary btn--sm"
+                [disabled]="procesandoId() === tramite.id"
+                (click)="admitir(tramite)"
+              >Admitir</button>
+            </li>
+          } @empty {
+            <li class="lista__vacia">No hay trámites esperando admisión.</li>
+          }
+        </ul>
+      </section>
+
+      <section class="tarjeta seccion" aria-labelledby="titulo-recientes">
+        <div class="seccion__encabezado seccion__encabezado--fila">
+          <h2 id="titulo-recientes" class="seccion__titulo">Actualizados recientemente</h2>
+          <a class="seccion__link" routerLink="/bandeja">Ver todos</a>
+        </div>
+        <ul class="lista">
+          @for (tramite of recientes(); track tramite.id) {
+            <li class="lista__item">
+              <span class="lista__numero">{{ tramite.id }}</span>
+              <span class="lista__tipo">{{ tramite.tipoTramite }}</span>
+              <app-estado-badge [estado]="tramite.estado" />
+              <span class="lista__fecha">{{ tramite.fechaActualizacion | date: 'd MMM' }}</span>
+            </li>
+          } @empty {
+            <li class="lista__vacia">Aún no hay trámites.</li>
+          }
+        </ul>
+      </section>
+    </div>
+  }
+</div>
