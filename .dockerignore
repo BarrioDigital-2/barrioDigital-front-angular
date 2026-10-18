@@ -1,0 +1,7 @@
+# Archivos que NO se copian al construir la imagen
+node_modules/
+dist/
+.angular/
+.git/
+.vscode/
+*.md
