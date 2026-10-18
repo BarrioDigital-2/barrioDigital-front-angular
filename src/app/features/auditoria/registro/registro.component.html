@@ -60,6 +60,7 @@
             <th scope="col">N.º</th>
             <th scope="col">Tipo</th>
             <th scope="col">Vecino</th>
+            <th scope="col">Dirección</th>
             <th scope="col">Estado</th>
             <th scope="col">Creado</th>
             <th scope="col">Última actualización</th>
@@ -71,13 +72,14 @@
               <td class="tabla__numero">{{ tramite.id }}</td>
               <td class="tabla__tipo">{{ tramite.tipoTramite }}</td>
               <td>{{ tramite.vecinoEmail }}</td>
+              <td>{{ tramite.direccion ?? '—' }}</td>
               <td><app-estado-badge [estado]="tramite.estado" /></td>
               <td class="tabla__fecha">{{ tramite.fechaCreacion | date: 'dd-MM-yyyy HH:mm' }}</td>
               <td class="tabla__fecha">{{ tramite.fechaActualizacion | date: 'dd-MM-yyyy HH:mm' }}</td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="6" class="tabla__vacia">No hay trámites que coincidan con los filtros.</td>
+              <td colspan="7" class="tabla__vacia">No hay trámites que coincidan con los filtros.</td>
             </tr>
           }
         </tbody>

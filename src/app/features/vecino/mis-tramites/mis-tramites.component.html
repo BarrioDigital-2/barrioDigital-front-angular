@@ -41,9 +41,16 @@
               <div class="tramite__titulo">
                 <span class="tramite__numero">N.º {{ tramite.id }}</span>
                 <h3 class="tramite__tipo">{{ tramite.tipoTramite }}</h3>
+                @if (tramite.direccion) {
+                  <span class="tramite__direccion">{{ tramite.direccion }}</span>
+                }
               </div>
               <app-estado-badge [estado]="tramite.estado" />
             </div>
+
+            @if (tramite.descripcion) {
+              <p class="tramite__descripcion">{{ tramite.descripcion }}</p>
+            }
 
             <app-estado-progreso [tramite]="tramite" />
 

@@ -57,7 +57,12 @@
           @for (tramite of store.filtrados(); track tramite.id) {
             <tr>
               <td class="tabla__numero">{{ tramite.id }}</td>
-              <td class="tabla__tipo">{{ tramite.tipoTramite }}</td>
+              <td class="tabla__tipo">
+                {{ tramite.tipoTramite }}
+                @if (tramite.direccion) {
+                  <span class="tabla__detalle">{{ tramite.direccion }}</span>
+                }
+              </td>
               <td>{{ tramite.vecinoEmail }}</td>
               <td class="tabla__fecha">{{ tramite.fechaCreacion | date: 'd MMM' }}</td>
               <td><app-estado-badge [estado]="tramite.estado" /></td>

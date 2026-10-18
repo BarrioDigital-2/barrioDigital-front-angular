@@ -4,6 +4,24 @@
   gap: 1.25rem;
 }
 
+.tramite-form__descripcion {
+  height: auto;
+  min-height: 88px;
+  padding: 0.625rem 0.75rem;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.tramite-form__contador {
+  align-self: flex-end;
+  font-variant-numeric: tabular-nums;
+}
+
+.campo__opcional {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
 .tramite-form__enviar {
   height: 48px;
   font-size: 0.9375rem;

@@ -77,6 +77,8 @@ export class RegistroComponent implements OnInit {
       t.id,
       t.tipoTramite,
       t.vecinoEmail,
+      t.direccion ?? '',
+      t.descripcion ?? '',
       ESTADO_META[t.estado].etiqueta,
       formato(t.fechaCreacion),
       formato(t.fechaActualizacion),
@@ -85,7 +87,7 @@ export class RegistroComponent implements OnInit {
 
     descargarCsv(
       `registro-tramites-${hoy}.csv`,
-      ['N.º', 'Tipo', 'Vecino', 'Estado', 'Creado', 'Última actualización'],
+      ['N.º', 'Tipo', 'Vecino', 'Dirección', 'Descripción', 'Estado', 'Creado', 'Última actualización'],
       filas,
     );
   }

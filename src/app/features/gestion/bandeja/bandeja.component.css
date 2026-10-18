@@ -89,6 +89,14 @@
   font-weight: 600;
 }
 
+.tabla__detalle {
+  display: block;
+  margin-top: 0.125rem;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
 .tabla__fecha {
   white-space: nowrap;
 }

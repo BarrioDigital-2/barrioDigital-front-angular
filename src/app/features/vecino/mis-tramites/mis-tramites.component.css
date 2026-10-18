@@ -90,6 +90,16 @@
   font-size: 1.125rem;
 }
 
+.tramite__direccion {
+  font-size: 0.875rem;
+  color: var(--estado-ingresado-fg);
+}
+
+.tramite__descripcion {
+  font-size: 0.875rem;
+  color: var(--estado-ingresado-fg);
+}
+
 .tramite__fechas {
   display: flex;
   flex-wrap: wrap;

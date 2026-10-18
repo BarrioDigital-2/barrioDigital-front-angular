@@ -12,6 +12,36 @@
     }
   </label>
 
+  @if (pideDireccion()) {
+    <label class="campo">
+      Dirección
+      <input
+        class="campo__control"
+        type="text"
+        formControlName="direccion"
+        placeholder="Calle, número y comuna"
+        autocomplete="street-address"
+      />
+      @if (campoInvalido('direccion')) {
+        <span class="campo__error">Indica dónde está el problema para que la cuadrilla pueda ir.</span>
+      } @else {
+        <span class="campo__ayuda">Este trámite requiere una visita al lugar.</span>
+      }
+    </label>
+  }
+
+  <label class="campo">
+    Descripción <span class="campo__opcional">(opcional)</span>
+    <textarea
+      class="campo__control tramite-form__descripcion"
+      formControlName="descripcion"
+      rows="3"
+      [attr.maxlength]="maxDescripcion"
+      placeholder="Ej.: frente al paradero, ocupa media pista"
+    ></textarea>
+    <span class="campo__ayuda tramite-form__contador">{{ largoDescripcion() }} / {{ maxDescripcion }}</span>
+  </label>
+
   <label class="campo">
     {{ emailFijo() ? 'Correo de contacto' : 'Correo del vecino' }}
     <input
