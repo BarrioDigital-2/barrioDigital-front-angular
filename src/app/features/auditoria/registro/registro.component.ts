@@ -4,13 +4,15 @@ import { LOCALE_ID } from '@angular/core';
 import { TramitesService } from '../../../core/api/tramites.service';
 import { ESTADOS, ESTADO_META } from '../../../domain/tramite-estado';
 import { EstadoTramite, Tramite } from '../../../domain/tramite.model';
+import { nombreTramite } from '../../../domain/tipos-tramite';
 import { EstadoBadgeComponent } from '../../../shared/ui/estado-badge/estado-badge.component';
+import { NombreTramitePipe } from '../../../shared/pipes/nombre-tramite.pipe';
 import { descargarCsv } from '../../../shared/utils/csv';
 
 /** Pantalla del Auditor: registro completo de tramites, solo lectura, con exportacion a CSV. */
 @Component({
   selector: 'app-registro',
-  imports: [DatePipe, EstadoBadgeComponent],
+  imports: [DatePipe, EstadoBadgeComponent, NombreTramitePipe],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css',
 })
@@ -75,7 +77,7 @@ export class RegistroComponent implements OnInit {
     const formato = (fecha: string) => formatDate(fecha, 'dd-MM-yyyy HH:mm', this.locale);
     const filas = this.filtrados().map((t) => [
       t.id,
-      t.tipoTramite,
+      nombreTramite(t.tipoTramite),
       t.vecinoEmail,
       t.direccion ?? '',
       t.descripcion ?? '',

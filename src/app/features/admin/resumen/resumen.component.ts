@@ -5,6 +5,7 @@ import { TramitesService } from '../../../core/api/tramites.service';
 import { ESTADOS, ESTADO_META, contarPorEstado, estaCerrado } from '../../../domain/tramite-estado';
 import { Tramite } from '../../../domain/tramite.model';
 import { EstadoBadgeComponent } from '../../../shared/ui/estado-badge/estado-badge.component';
+import { NombreTramitePipe } from '../../../shared/pipes/nombre-tramite.pipe';
 
 interface Indicador {
   etiqueta: string;
@@ -23,7 +24,7 @@ const MAX_RECIENTES = 6;
 /** Pantalla del Admin: vista general de la operacion y atajo para admitir lo pendiente. */
 @Component({
   selector: 'app-resumen',
-  imports: [DatePipe, RouterLink, EstadoBadgeComponent],
+  imports: [DatePipe, RouterLink, EstadoBadgeComponent, NombreTramitePipe],
   templateUrl: './resumen.component.html',
   styleUrl: './resumen.component.css',
 })

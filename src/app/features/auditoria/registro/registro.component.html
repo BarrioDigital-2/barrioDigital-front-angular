@@ -70,7 +70,7 @@
           @for (tramite of filtrados(); track tramite.id) {
             <tr>
               <td class="tabla__numero">{{ tramite.id }}</td>
-              <td class="tabla__tipo">{{ tramite.tipoTramite }}</td>
+              <td class="tabla__tipo">{{ tramite.tipoTramite | nombreTramite }}</td>
               <td>{{ tramite.vecinoEmail }}</td>
               <td>{{ tramite.direccion ?? '—' }}</td>
               <td><app-estado-badge [estado]="tramite.estado" /></td>

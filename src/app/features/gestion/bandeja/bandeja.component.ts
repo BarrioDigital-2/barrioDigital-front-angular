@@ -3,12 +3,13 @@ import { DatePipe } from '@angular/common';
 import { AccionEstado, accionesDisponibles } from '../../../domain/tramite-estado';
 import { Tramite } from '../../../domain/tramite.model';
 import { EstadoBadgeComponent } from '../../../shared/ui/estado-badge/estado-badge.component';
+import { NombreTramitePipe } from '../../../shared/pipes/nombre-tramite.pipe';
 import { BandejaStore } from './bandeja.store';
 
 /** Bandeja de gestion (Funcionario y Admin): filtra, busca y avanza los tramites por su flujo. */
 @Component({
   selector: 'app-bandeja',
-  imports: [DatePipe, EstadoBadgeComponent],
+  imports: [DatePipe, EstadoBadgeComponent, NombreTramitePipe],
   providers: [BandejaStore],
   templateUrl: './bandeja.component.html',
   styleUrl: './bandeja.component.css',

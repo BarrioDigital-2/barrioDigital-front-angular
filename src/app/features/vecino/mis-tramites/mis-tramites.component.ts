@@ -7,13 +7,14 @@ import { CrearTramiteRequest, Tramite } from '../../../domain/tramite.model';
 import { EstadoBadgeComponent } from '../../../shared/ui/estado-badge/estado-badge.component';
 import { EstadoProgresoComponent } from '../../../shared/ui/estado-progreso/estado-progreso.component';
 import { TramiteFormComponent } from '../../../shared/ui/tramite-form/tramite-form.component';
+import { NombreTramitePipe } from '../../../shared/pipes/nombre-tramite.pipe';
 
 type Filtro = 'todos' | 'en-curso' | 'cerrados';
 
 /** Pantalla del Vecino: sus tramites con su avance y el formulario para ingresar uno nuevo. */
 @Component({
   selector: 'app-mis-tramites',
-  imports: [DatePipe, EstadoBadgeComponent, EstadoProgresoComponent, TramiteFormComponent],
+  imports: [DatePipe, EstadoBadgeComponent, EstadoProgresoComponent, TramiteFormComponent, NombreTramitePipe],
   templateUrl: './mis-tramites.component.html',
   styleUrl: './mis-tramites.component.css',
 })

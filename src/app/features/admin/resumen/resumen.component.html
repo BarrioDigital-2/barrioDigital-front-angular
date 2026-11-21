@@ -49,7 +49,7 @@
           @for (tramite of pendientes(); track tramite.id) {
             <li class="lista__item">
               <div class="lista__texto">
-                <span class="lista__titulo">{{ tramite.tipoTramite }}</span>
+                <span class="lista__titulo">{{ tramite.tipoTramite | nombreTramite }}</span>
                 <span class="lista__detalle">
                   N.º {{ tramite.id }} · {{ tramite.vecinoEmail }} · {{ tramite.fechaCreacion | date: 'd MMM, HH:mm' }}
                 </span>
@@ -76,7 +76,7 @@
           @for (tramite of recientes(); track tramite.id) {
             <li class="lista__item">
               <span class="lista__numero">{{ tramite.id }}</span>
-              <span class="lista__tipo">{{ tramite.tipoTramite }}</span>
+              <span class="lista__tipo">{{ tramite.tipoTramite | nombreTramite }}</span>
               <app-estado-badge [estado]="tramite.estado" />
               <span class="lista__fecha">{{ tramite.fechaActualizacion | date: 'd MMM' }}</span>
             </li>
