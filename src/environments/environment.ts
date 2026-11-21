@@ -10,9 +10,10 @@ export const environment = {
     redirectUri: 'http://localhost:4200',
   },
   bff: {
-    baseUrl: 'http://localhost:8080/api',
-    get scope(): string {
-      return `api://${environment.azure.clientId}/access_as_user`;
-    },
+    baseUrl: 'http://localhost:8080/api/v1',
+
+  get scope(): string {
+    return `api://${environment.azure.clientId}/access_as_user`;
   },
+},
 };
