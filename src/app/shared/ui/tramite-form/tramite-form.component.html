@@ -3,9 +3,10 @@
     Tipo de trámite
     <select class="campo__control" formControlName="tipoTramite">
       <option value="" disabled>Selecciona una opción</option>
-      @for (tipo of tipos; track tipo.nombre) {
-        <option [value]="tipo.nombre">{{ tipo.nombre }}</option>
+            @for (tipo of tipos; track tipo.codigo) {
+        <option [value]="tipo.codigo">{{ tipo.nombre }}</option>
       }
+
     </select>
     @if (campoInvalido('tipoTramite')) {
       <span class="campo__error">Elige el tipo de trámite.</span>

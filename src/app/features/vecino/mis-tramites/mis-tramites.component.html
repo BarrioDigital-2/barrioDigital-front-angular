@@ -40,7 +40,7 @@
             <div class="tramite__cabecera">
               <div class="tramite__titulo">
                 <span class="tramite__numero">N.º {{ tramite.id }}</span>
-                <h3 class="tramite__tipo">{{ tramite.tipoTramite }}</h3>
+                <h3 class="tramite__tipo">{{ tramite.tipoTramite | nombreTramite }}</h3>
                 @if (tramite.direccion) {
                   <span class="tramite__direccion">{{ tramite.direccion }}</span>
                 }
