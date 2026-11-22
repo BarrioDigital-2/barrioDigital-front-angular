@@ -58,7 +58,7 @@
             <tr>
               <td class="tabla__numero">{{ tramite.id }}</td>
               <td class="tabla__tipo">
-                {{ tramite.tipoTramite }}
+                {{ tramite.tipoTramite | nombreTramite }}
                 @if (tramite.direccion) {
                   <span class="tabla__detalle">{{ tramite.direccion }}</span>
                 }
